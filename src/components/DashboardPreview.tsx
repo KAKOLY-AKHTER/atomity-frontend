@@ -24,7 +24,7 @@ export function DashboardPreview() {
   };
 
   return (
-    <section id="dashboard-preview" className="relative py-16 lg:py-20 px-4 sm:px-6 overflow-hidden bg-grid-subtle">
+    <section id="dashboard-preview" className="relative py-16 lg:py-20 px-4 sm:px-6 overflow-hidden bg-grid-subtle transition-colors duration-500" style={{ backgroundColor: tokens.colors.bgPrimary }}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10 lg:mb-12 space-y-4">
            <motion.h2 
@@ -39,7 +39,7 @@ export function DashboardPreview() {
                behind the savings
              </span>
            </motion.h2>
-           <p className="max-w-xl mx-auto opacity-60 text-sm md:text-base font-medium" style={{ color: tokens.colors.textSecondary }}>
+           <p className="max-w-xl mx-auto opacity-80 text-sm md:text-base font-medium" style={{ color: tokens.colors.textSecondary }}>
              Atomity's engine analyzes millions of data points to ensure your cloud is 
              always rightsized and cost-efficient.
            </p>
@@ -50,14 +50,14 @@ export function DashboardPreview() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as const }}
-          className="relative rounded-2xl lg:rounded-3xl border-2 overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.4)] mx-auto"
+          className="relative rounded-2xl lg:rounded-3xl border-2 overflow-hidden shadow-2xl dark:shadow-[0_40px_100px_rgba(0,0,0,0.4)] mx-auto transition-all"
           style={{ 
             backgroundColor: tokens.colors.bgCard,
             borderColor: tokens.colors.border
           }}
         >
           {/* Dashboard Header Bar */}
-          <div className="h-14 lg:h-16 border-b flex items-center px-4 lg:px-8 gap-4 lg:gap-8 overflow-x-auto no-scrollbar" style={{ borderColor: tokens.colors.border, backgroundColor: "color-mix(in srgb, var(--color-bg-primary) 40%, transparent)" }}>
+          <div className="h-14 lg:h-16 border-b flex items-center px-4 lg:px-8 gap-4 lg:gap-8 overflow-x-auto no-scrollbar" style={{ borderColor: tokens.colors.border, backgroundColor: "color-mix(in srgb, var(--color-bg-primary) 60%, transparent)" }}>
             <div className="hidden sm:flex gap-2">
               <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
               <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
@@ -87,7 +87,7 @@ export function DashboardPreview() {
             {/* Sidebar - Hidden on smaller screens */}
             <div className="hidden lg:block col-span-3 space-y-10 border-r pr-10" style={{ borderColor: tokens.colors.border }}>
               <div className="space-y-6">
-                <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Main Menu</div>
+                <div className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40" style={{ color: tokens.colors.textSecondary }}>Main Menu</div>
                 <div className="space-y-4">
                   {[
                     { name: "Overview", active: true, target: "hero" },
@@ -101,8 +101,8 @@ export function DashboardPreview() {
                       onClick={() => handleSmoothScroll(item.target)}
                       className="flex items-center gap-3 group cursor-pointer hover:translate-x-1 transition-transform"
                     >
-                      <div className={`w-1.5 h-1.5 rounded-full ${item.active ? 'bg-accent-primary' : 'bg-white/10'} group-hover:bg-accent-primary transition-colors`} />
-                      <span className={`text-[11px] font-bold uppercase tracking-widest ${item.active ? 'opacity-100' : 'opacity-40'} group-hover:opacity-100 transition-opacity`}>
+                      <div className={`w-1.5 h-1.5 rounded-full ${item.active ? 'bg-accent-primary' : 'bg-black/10 dark:bg-white/10'} group-hover:bg-accent-primary transition-colors`} />
+                      <span className={`text-[11px] font-bold uppercase tracking-widest ${item.active ? 'opacity-100' : 'opacity-40'} group-hover:opacity-100 transition-opacity`} style={{ color: tokens.colors.textPrimary }}>
                         {item.name}
                       </span>
                     </div>
@@ -115,7 +115,7 @@ export function DashboardPreview() {
             <div className="col-span-12 lg:col-span-9 space-y-8 lg:space-y-12">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 lg:gap-6">
                 <div className="space-y-1 lg:space-y-2">
-                  <h3 className="text-lg lg:text-xl font-black tracking-tight">System Performance</h3>
+                  <h3 className="text-lg lg:text-xl font-black tracking-tight" style={{ color: tokens.colors.textPrimary }}>System Performance</h3>
                 </div>
                 <button 
                   onClick={() => handleSmoothScroll('savings')}
@@ -134,15 +134,15 @@ export function DashboardPreview() {
                   <div 
                     key={stat.label}
                     onClick={() => handleSmoothScroll(stat.target)}
-                    className="p-4 lg:p-6 bg-white/[0.02] rounded-xl lg:rounded-2xl border-2 flex flex-col gap-3 lg:gap-4 group cursor-pointer hover:bg-white/[0.05] transition-all" 
+                    className="p-4 lg:p-6 bg-black/[0.01] dark:bg-white/[0.02] rounded-xl lg:rounded-2xl border-2 flex flex-col gap-3 lg:gap-4 group cursor-pointer hover:bg-black/[0.03] dark:hover:bg-white/[0.05] transition-all" 
                     style={{ borderColor: tokens.colors.border }}
                   >
                     <div className="flex justify-between items-center">
-                       <span className="text-[8px] lg:text-[9px] font-black uppercase tracking-widest opacity-40">{stat.label}</span>
+                       <span className="text-[8px] lg:text-[9px] font-black uppercase tracking-widest opacity-40" style={{ color: tokens.colors.textSecondary }}>{stat.label}</span>
                        <DashboardIcon color={stat.color} />
                     </div>
                     <div className="flex items-baseline gap-2">
-                       <span className="text-xl lg:text-2xl font-black tracking-tighter">{stat.value}</span>
+                       <span className="text-xl lg:text-2xl font-black tracking-tighter" style={{ color: tokens.colors.textPrimary }}>{stat.value}</span>
                        <span className="text-[8px] lg:text-[9px] font-black" style={{ color: stat.trend.startsWith('+') ? tokens.colors.accentDanger : tokens.colors.accentSuccess }}>
                          {stat.trend}
                        </span>
@@ -151,13 +151,13 @@ export function DashboardPreview() {
                 ))}
               </div>
 
-              <div className="w-full bg-white/[0.02] rounded-2xl lg:rounded-3xl border-2 relative overflow-hidden flex flex-col shadow-inner" style={{ borderColor: tokens.colors.border }}>
+              <div className="w-full bg-black/[0.01] dark:bg-white/[0.02] rounded-2xl lg:rounded-3xl border-2 relative overflow-hidden flex flex-col shadow-inner transition-all" style={{ borderColor: tokens.colors.border }}>
                 <div className="p-4 lg:p-6 border-b flex justify-between items-center" style={{ borderColor: tokens.colors.border }}>
-                   <div className="text-[10px] lg:text-xs font-black uppercase tracking-widest opacity-60">Optimization Trend</div>
+                   <div className="text-[10px] lg:text-xs font-black uppercase tracking-widest opacity-60" style={{ color: tokens.colors.textSecondary }}>Optimization Trend</div>
                    <div className="flex gap-2 lg:gap-4">
                       <div className="flex items-center gap-1.5 lg:gap-2">
                          <div className="w-1.5 lg:w-2 h-1.5 lg:h-2 rounded-full bg-accent-primary" />
-                         <span className="text-[8px] lg:text-[9px] font-black uppercase tracking-widest opacity-40">Optimized</span>
+                         <span className="text-[8px] lg:text-[9px] font-black uppercase tracking-widest opacity-40" style={{ color: tokens.colors.textSecondary }}>Optimized</span>
                       </div>
                    </div>
                 </div>
@@ -178,7 +178,7 @@ export function DashboardPreview() {
                         stroke={tokens.colors.accentPrimary}
                         strokeWidth="5"
                         strokeLinecap="round"
-                        className="drop-shadow-[0_0_15px_#00ff9d]"
+                        className="drop-shadow-[0_0_15px_rgba(0,255,157,0.3)]"
                       />
                    </svg>
                 </div>
