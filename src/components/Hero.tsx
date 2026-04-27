@@ -1,27 +1,17 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { tokens } from "@/tokens/colors";
 import { useState } from "react";
 import { TrialModal } from "./TrialModal";
 
+const trustedCompanies = ["Amazon", "Google Cloud", "Microsoft", "DigitalOcean", "Kubernetes"];
+
 export function Hero() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
-
-  const handleSmoothScroll = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const offset = 80;
-      window.scrollTo({
-        top: element.offsetTop - offset,
-        behavior: "smooth"
-      });
-    }
-  };
 
   const fadeUp = {
-    hidden: { y: shouldReduceMotion ? 0 : 40, opacity: 0 },
+    hidden: { y: 20, opacity: 0 },
     visible: { 
       y: 0, 
       opacity: 1,
@@ -31,89 +21,102 @@ export function Hero() {
 
   return (
     <section 
-      className="relative pt-40 pb-20 px-6 text-center bg-grid-subtle overflow-hidden"
+      className="relative pt-24 pb-16 lg:pt-32 lg:pb-20 px-6 text-center overflow-hidden"
+      style={{ backgroundColor: tokens.colors.bgPrimary }}
     >
       <TrialModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-      {/* Decorative Glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none -z-10">
-        <motion.div 
-          animate={shouldReduceMotion ? {} : { 
-            scale: [1, 1.1, 1], 
-            opacity: [0.03, 0.06, 0.03]
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
-          className="absolute top-20 left-1/4 w-[600px] h-[600px] rounded-full blur-[120px] bg-[#4ade80]"
-        />
+      {/* Cinematic Background Effects */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-accent-primary/10 rounded-full blur-[120px] opacity-20" />
+        <div className="absolute inset-0 bg-grid-subtle opacity-40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-bg-primary" />
       </div>
 
-      <div className="max-w-4xl mx-auto space-y-12 relative z-10">
+      <div className="max-w-5xl mx-auto space-y-10 relative z-10">
+        {/* Modern Glass Badge */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="inline-flex items-center gap-3 px-4 py-2 rounded-full border bg-white/5 backdrop-blur-md"
+          className="inline-flex items-center gap-3 px-4 py-2 rounded-full border bg-white/[0.03] backdrop-blur-md"
           style={{ borderColor: tokens.colors.border }}
         >
-          <div className="w-2 h-2 rounded-full bg-[#4ade80] animate-pulse" />
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#4ade80]">
-            v2.4 Engine Now Live
+          <span className="flex h-2 w-2 rounded-full bg-accent-primary animate-pulse" />
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80" style={{ color: tokens.colors.textPrimary }}>
+            Engine V2.4 Now Live
+          </span>
+          <div className="h-4 w-[1px] bg-white/10 mx-1" />
+          <span className="text-[10px] font-bold opacity-40" style={{ color: tokens.colors.textSecondary }}>
+            View Changelog →
           </span>
         </motion.div>
 
-        <motion.h1 
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          transition={{ delay: 0.1 }}
-          className="text-balance"
-          style={{ color: tokens.colors.textPrimary }}
-        >
-          Automate your <br />
-          <span className="relative inline-block text-[#4ade80] mt-4 italic">
-            Cloud Savings
-            <motion.div 
-               initial={{ width: 0 }}
-               whileInView={{ width: "100%" }}
-               transition={{ delay: 1, duration: 1 }}
-               className="absolute -bottom-2 left-0 h-1.5 bg-[#4ade80]/30 rounded-full"
-            />
-          </span>
-        </motion.h1>
+        {/* Standardized Title Size */}
+        <div className="space-y-6">
+          <motion.h1
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            transition={{ delay: 0.1 }}
+            className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] text-white"
+          >
+            The Operating System <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-accent-primary to-accent-primary/50">
+              for Cloud Efficiency
+            </span>
+          </motion.h1>
 
-        <motion.p 
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-          transition={{ delay: 0.2 }}
-          className="max-w-2xl mx-auto opacity-70 leading-relaxed font-medium"
-          style={{ color: tokens.colors.textSecondary }}
-        >
-          Atomity provides real-time workload routing and automated rightsizing for 
-          mission-critical infrastructure. Eliminate waste without affecting performance 
-          or reliability.
-        </motion.p>
+          <motion.p
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp}
+            transition={{ delay: 0.2 }}
+            className="max-w-2xl mx-auto text-sm md:text-base lg:text-lg opacity-60 leading-relaxed font-medium"
+            style={{ color: tokens.colors.textSecondary }}
+          >
+            Atomity automates cloud rightsizing and workload routing to eliminate 
+            waste and reduce your AWS bill by up to 60% instantly.
+          </motion.p>
+        </div>
 
-        <motion.div 
+        {/* Premium CTA Buttons */}
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeUp}
           transition={{ delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-6"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
         >
           <button 
             onClick={() => setIsModalOpen(true)}
-            className="w-full sm:w-auto px-10 py-5 bg-[#4ade80] text-black font-black text-xs uppercase tracking-widest rounded-2xl shadow-2xl shadow-[#4ade80]/20 hover:scale-105 active:scale-95 transition-all"
+            className="group relative px-8 py-4 bg-accent-primary rounded-xl font-black text-xs uppercase tracking-widest text-black transition-all hover:scale-105 active:scale-95 overflow-hidden"
           >
+            <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500" />
             Get Started Free
           </button>
-          <button 
-            onClick={() => handleSmoothScroll('dashboard-preview')}
-            className="w-full sm:w-auto px-10 py-5 border-2 border-white/10 font-black text-xs uppercase tracking-widest rounded-2xl hover:bg-white/5 transition-all"
-            style={{ color: tokens.colors.textPrimary }}
-          >
-            Explore Platform
+          <button className="px-8 py-4 bg-white/5 border border-white/10 rounded-xl font-black text-xs uppercase tracking-widest text-white hover:bg-white/10 transition-all">
+            Book a Demo
           </button>
+        </motion.div>
+
+        {/* Trusted By Section */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 1 }}
+          className="pt-20 space-y-8"
+        >
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] opacity-30">
+            Trusted by the world's most innovative teams
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-30 grayscale hover:opacity-50 transition-opacity">
+            {trustedCompanies.map((company) => (
+              <span key={company} className="text-lg md:text-xl font-bold tracking-tighter italic">
+                {company}
+              </span>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

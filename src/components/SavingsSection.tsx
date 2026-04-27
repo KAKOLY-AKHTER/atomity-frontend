@@ -3,129 +3,89 @@
 import { useSavingsData } from "@/hooks/useSavingsData";
 import { SavingsTotalBanner } from "./SavingsTotalBanner";
 import { SavingsCard } from "./SavingsCard";
-import { ClusterDiagram } from "./ClusterDiagram";
 import { SkeletonCard } from "./SkeletonCard";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { tokens } from "@/tokens/colors";
-import { useState } from "react";
+
+// Abstract cloud particle / network nodes effect (Theme aware)
+const NetworkBackground = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="absolute top-[20%] left-[10%] w-[40vw] h-[40vw] bg-accent-primary/10 rounded-full blur-[150px] opacity-[0.05]" />
+    
+    <svg className="absolute inset-0 w-full h-full opacity-[0.03] sm:opacity-[0.05]" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="network-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+          <circle cx="2" cy="2" r="1.5" fill="currentColor" />
+          <path d="M 2 2 L 102 102 M 102 2 L 2 102" stroke="currentColor" strokeWidth="0.5" fill="none" opacity="0.3" />
+        </pattern>
+      </defs>
+      <rect x="0" y="0" width="100%" height="100%" fill="url(#network-pattern)" className="text-accent-primary" />
+    </svg>
+  </div>
+);
 
 export function SavingsSection() {
-  const { data, isLoading, isError, refetch } = useSavingsData();
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
-
-  const multiplier = billingCycle === "yearly" ? 12 : 1;
+  const { data, isLoading, isError } = useSavingsData();
 
   return (
     <section 
       id="savings" 
       aria-labelledby="savings-heading"
-      className="relative py-32 px-6 bg-grid-subtle border-t overflow-hidden"
+      className="relative py-16 lg:py-20 px-6 border-t overflow-hidden transition-colors duration-500"
       style={{ backgroundColor: tokens.colors.bgPrimary, borderColor: tokens.colors.border }}
     >
-      <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Balanced Header */}
-        <div className="text-center mb-24 space-y-8">
-           <div className="flex flex-col items-center gap-4">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                className="inline-block px-3 py-1 rounded-md border text-[10px] font-black uppercase tracking-widest"
-                style={{ 
-                  backgroundColor: "rgba(74, 222, 128, 0.05)",
-                  borderColor: "rgba(74, 222, 128, 0.15)",
-                  color: tokens.colors.accentPrimary
-                }}
-              >
-                ROI ENGINE
-              </motion.div>
-              
-              <h2
-                id="savings-heading"
-                className="text-4xl md:text-6xl font-black tracking-tighter leading-none mx-auto max-w-3xl"
-                style={{ color: tokens.colors.textPrimary }}
-              >
-                Maximize your <span style={{ color: tokens.colors.accentPrimary }}>Cloud Efficiency</span>
-              </h2>
-           </div>
+      <NetworkBackground />
 
-           {/* Billing Cycle Toggle - Centered */}
-           <div className="flex bg-white/5 p-1 rounded-xl border mx-auto w-fit" style={{ borderColor: tokens.colors.border }}>
-              <button 
-                onClick={() => setBillingCycle("monthly")}
-                className="px-8 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all"
-                style={{ 
-                   backgroundColor: billingCycle === "monthly" ? tokens.colors.accentPrimary : "transparent",
-                   color: billingCycle === "monthly" ? "#000" : tokens.colors.textSecondary
-                }}
-              >
-                Monthly
-              </button>
-              <button 
-                onClick={() => setBillingCycle("yearly")}
-                className="px-8 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all"
-                style={{ 
-                   backgroundColor: billingCycle === "yearly" ? tokens.colors.accentPrimary : "transparent",
-                   color: billingCycle === "yearly" ? "#000" : tokens.colors.textSecondary
-                }}
-              >
-                Yearly
-              </button>
-           </div>
+      <div className="relative z-10 max-w-6xl mx-auto flex flex-col items-center">
+        
+        {/* Standardized Title Size */}
+        <div className="text-center mb-10 lg:mb-12 space-y-4">
+           <motion.h2
+             initial={{ opacity: 0, y: 20 }}
+             whileInView={{ opacity: 1, y: 0 }}
+             viewport={{ once: true }}
+             id="savings-heading"
+             className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-none mx-auto max-w-4xl"
+             style={{ color: tokens.colors.textPrimary }}
+           >
+             Maximize your <br className="hidden md:block" />
+             <span className="text-transparent bg-clip-text bg-gradient-to-b from-accent-primary to-accent-primary/50">
+               Cloud Efficiency
+             </span>
+           </motion.h2>
+           <p className="max-w-xl mx-auto opacity-60 text-sm md:text-base font-medium" style={{ color: tokens.colors.textSecondary }}>
+             Professional FinOps recommendations to reduce your cloud waste instantly.
+           </p>
         </div>
 
-        {/* Balanced Grid: 6/6 split */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          
-          {/* Integrated Diagram - Perfectly Balanced */}
-          <div className="relative order-2 lg:order-1">
-             <div className="absolute inset-0 rounded-full blur-[120px] pointer-events-none opacity-10" style={{ backgroundColor: tokens.colors.accentPrimary }} />
-             <div className="max-w-md mx-auto">
-                <ClusterDiagram />
-             </div>
-          </div>
-
-          <div className="space-y-12 order-1 lg:order-2">
-            {data ? (
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={billingCycle}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  className="flex justify-center lg:justify-start"
-                >
-                  <SavingsTotalBanner totalSavings={data.totalMonthlySavings * multiplier} />
-                </motion.div>
-              </AnimatePresence>
-            ) : null}
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {isLoading ? (
-                <div role="status" aria-live="polite" aria-label="Loading savings data" className="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)}
-                </div>
-              ) : isError ? (
-                <div className="col-span-full py-12 text-center border-2 rounded-2xl" style={{ borderColor: tokens.colors.border }}>
-                  <p className="mb-4 text-sm font-bold" style={{ color: tokens.colors.accentDanger }}>Error connecting to data source.</p>
-                  <button onClick={() => refetch()} className="min-h-[44px] px-8 py-3 bg-white/5 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-white/10 transition-all">Retry Connection</button>
-                </div>
-              ) : (
-                data?.recommendations.map((rec, index) => (
-                  <motion.div key={rec.id + billingCycle}>
-                    <SavingsCard
-                      title={rec.title}
-                      description={rec.description}
-                      savings={rec.savings * multiplier}
-                      index={index}
-                    />
-                  </motion.div>
-                ))
-              )}
-            </div>
-          </div>
-
+        {/* Highlight Banner */}
+        <div className="w-full max-w-3xl mb-16">
+          {data ? <SavingsTotalBanner totalSavings={data.totalMonthlySavings} /> : null}
         </div>
+
+        {/* 2x2 Grid */}
+        <div className="w-full max-w-4xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {isLoading ? (
+              Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
+            ) : isError ? (
+              <div className="col-span-full py-12 text-center border border-white/10 rounded-2xl">
+                <p className="text-sm font-bold" style={{ color: tokens.colors.accentDanger }}>Error connecting to data source.</p>
+              </div>
+            ) : (
+              data?.recommendations.map((rec, index) => (
+                <SavingsCard
+                  key={rec.id}
+                  title={rec.title}
+                  description={rec.description}
+                  savings={rec.savings}
+                  index={index}
+                />
+              ))
+            )}
+          </div>
+        </div>
+
       </div>
     </section>
   );

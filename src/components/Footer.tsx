@@ -8,7 +8,8 @@ export function Footer() {
       className="py-20 px-6 border-t"
       style={{ backgroundColor: tokens.colors.bgPrimary, borderColor: tokens.colors.border }}
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+      {/* Footer Grid Container - Aligned with Navbar */}
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="space-y-6">
           <div className="flex items-center gap-2">
             <div className="h-6 w-6 rounded bg-[#4ade80]" />
@@ -49,12 +50,13 @@ export function Footer() {
         </div>
       </div>
       
-      <div className="max-w-7xl mx-auto pt-20 flex flex-col md:flex-row justify-between items-center gap-6 border-t mt-20" style={{ borderColor: tokens.colors.border }}>
-        <p className="text-xs opacity-40">© 2024 Atomity Inc. All rights reserved.</p>
-        <div className="flex gap-8 text-xs font-bold uppercase tracking-widest opacity-60">
-          <a href="#" className="hover:text-[#4ade80]">Twitter</a>
-          <a href="#" className="hover:text-[#4ade80]">GitHub</a>
-          <a href="#" className="hover:text-[#4ade80]">LinkedIn</a>
+      {/* Bottom Bar Container - Aligned with Navbar */}
+      <div className="max-w-7xl mx-auto px-6 pt-10 flex flex-col md:flex-row justify-between items-center gap-6 border-t mt-20" style={{ borderColor: tokens.colors.border }}>
+        <p className="text-xs opacity-40">© 2026 Atomity Inc. All rights reserved.</p>
+        <div className="flex gap-8 text-[10px] font-black uppercase tracking-widest opacity-60">
+          <a href="#" className="hover:text-[#4ade80] transition-colors">Twitter</a>
+          <a href="#" className="hover:text-[#4ade80] transition-colors">GitHub</a>
+          <a href="#" className="hover:text-[#4ade80] transition-colors">LinkedIn</a>
         </div>
       </div>
     </footer>

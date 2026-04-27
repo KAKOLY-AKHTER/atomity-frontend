@@ -1,49 +1,46 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { tokens } from "@/tokens/colors";
 import { useCountUp } from "@/hooks/useCountUp";
 import { useInView } from "@/hooks/useInView";
+import { motion } from "framer-motion";
+import { tokens } from "@/tokens/colors";
 
-interface SavingsTotalBannerProps {
-  totalSavings: number;
-}
-
-export function SavingsTotalBanner({ totalSavings }: SavingsTotalBannerProps) {
-  const shouldReduceMotion = useReducedMotion();
-  const { ref, isInView } = useInView({ once: true, margin: "-100px" });
-  const displayValue = useCountUp(totalSavings, isInView, 1.8);
+export function SavingsTotalBanner({ totalSavings }: { totalSavings: number }) {
+  const { ref, isInView } = useInView({ once: true, margin: "-50px" });
+  const displayValue = useCountUp(totalSavings, isInView, 1.5);
 
   return (
-    <div 
-      ref={ref} 
-      className="flex flex-col items-center lg:items-end text-center lg:text-right"
-      aria-label={`$${totalSavings.toLocaleString()} estimated monthly savings`}
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      className="p-6 sm:p-10 rounded-2xl sm:rounded-3xl border relative overflow-hidden transition-all duration-500"
+      style={{ 
+        backgroundColor: "color-mix(in srgb, var(--color-accent-primary) 5%, transparent)", 
+        borderColor: "color-mix(in srgb, var(--color-accent-primary) 20%, transparent)"
+      }}
     >
-      <span 
-        className="text-caption font-bold uppercase tracking-[0.3em] mb-4 block"
-        style={{ color: tokens.colors.accentPrimary }}
-      >
-        Estimated Monthly Savings
-      </span>
-      <div className="flex items-baseline gap-2 relative">
-        <span 
-          className="text-4xl md:text-5xl font-bold opacity-30 select-none"
-          aria-hidden="true"
-          style={{ color: tokens.colors.textPrimary }}
-        >
-          $
-        </span>
-        <motion.span 
-          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-6xl md:text-8xl font-bold tracking-tighter"
-          style={{ color: tokens.colors.textPrimary }}
-        >
-          {displayValue.toLocaleString()}
-        </motion.span>
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent-primary/10 via-transparent to-transparent pointer-events-none" />
+      
+      <div className="relative z-10 flex flex-col items-center text-center space-y-3 sm:space-y-4">
+        <h3 className="text-[9px] sm:text-[11px] font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] opacity-80" style={{ color: tokens.colors.accentPrimary }}>
+          Estimated Monthly Savings
+        </h3>
+        
+        <div className="flex items-start justify-center gap-1 sm:gap-2">
+          <span className="text-2xl sm:text-4xl md:text-5xl font-bold mt-1 sm:mt-2" style={{ color: tokens.colors.accentPrimary }}>$</span>
+          <span 
+            className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter leading-none" 
+            style={{ 
+              color: tokens.colors.accentPrimary,
+            }}
+          >
+            {displayValue.toLocaleString()}
+          </span>
+        </div>
       </div>
-    </div>
+      
+      <div className="absolute -bottom-10 sm:-bottom-20 -right-10 sm:-right-20 w-32 sm:w-64 h-32 sm:h-64 bg-accent-primary rounded-full blur-[60px] sm:blur-[100px] opacity-[0.1]" />
+    </motion.div>
   );
 }

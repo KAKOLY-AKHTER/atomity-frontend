@@ -6,7 +6,7 @@
   --color-bg-card: #16161f;
   --color-text-primary: #ffffff;
   --color-text-secondary: #a1a1aa;
-  --color-accent-primary: #4ade80;
+  --color-accent-primary: #00ff9d;
   --color-accent-success: #22c55e;
   --color-accent-danger: #ef4444;
   --color-border: rgba(255, 255, 255, 0.08);
@@ -33,7 +33,7 @@
   --color-bg-card: #ffffff;
   --color-text-primary: #0f172a;
   --color-text-secondary: #64748b;
-  --color-accent-primary: #16a34a;
+  --color-accent-primary: #059669; /* Slightly deeper green for better light mode contrast */
   --color-accent-success: #15803d;
   --color-accent-danger: #dc2626;
   --color-border: rgba(0, 0, 0, 0.1);
@@ -57,39 +57,40 @@ body {
   font-family: var(--font-sans);
   min-block-size: 100vh;
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Precise Typography Hierarchy */
+/* Premium Modern Typography */
 h1 {
-  font-size: clamp(2.5rem, 7vw, 5rem);
-  font-weight: 900;
-  letter-spacing: -0.05em;
-  line-height: 0.95;
-}
-
-h2 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 6.5vw, 4.5rem);
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em; /* Less tight, more elegant */
   line-height: 1.1;
 }
 
+h2 {
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
 h3 {
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
   font-weight: 700;
   letter-spacing: -0.01em;
 }
 
 p {
-  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
   opacity: 0.8;
+  font-weight: 400;
 }
 
 /* Global Transition */
 * {
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, color 0.2s ease;
 }
 
 /* Premium Card Base */
@@ -98,10 +99,10 @@ p {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-2xl);
   padding: var(--space-8);
-  box-shadow: 0 4px 20px -5px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 30px -10px rgba(0,0,0,0.05);
 }
 
 .bg-grid-subtle {
   background-image: radial-gradient(circle at 1px 1px, var(--color-border) 1px, transparent 0);
-  background-size: 32px 32px;
+  background-size: 40px 40px;
 }

@@ -9,8 +9,8 @@ export function SkeletonCard() {
       style={{ 
         backgroundColor: tokens.colors.bgCard,
         borderColor: tokens.colors.border,
-        padding: tokens.spacing.lg,
-        borderRadius: tokens.radius.xl,
+        padding: "2rem",
+        borderRadius: "20px",
         height: "200px"
       }}
     >

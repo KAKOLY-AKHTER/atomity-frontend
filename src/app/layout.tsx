@@ -29,7 +29,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ReactQueryProvider>
           <Navbar />
-          <div className="pt-20"> {/* Offset for sticky navbar */}
+          <div className="pt-16"> {/* Reduced offset for sticky navbar */}
             {children}
           </div>
         </ReactQueryProvider>

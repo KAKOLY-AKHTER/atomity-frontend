@@ -12,8 +12,28 @@ const metrics = [
 
 export function MetricsSection() {
   return (
-    <section id="metrics" className="py-20 px-6 border-t" style={{ backgroundColor: tokens.colors.bgSecondary, borderColor: tokens.colors.border }}>
+    <section id="metrics" className="py-16 lg:py-20 px-6 border-t" style={{ backgroundColor: tokens.colors.bgSecondary, borderColor: tokens.colors.border }}>
       <div className="max-w-7xl mx-auto">
+        
+        {/* Standardized Title Size */}
+        <div className="text-center mb-10 lg:mb-12 space-y-4">
+           <motion.h2 
+             initial={{ opacity: 0, y: 20 }}
+             whileInView={{ opacity: 1, y: 0 }}
+             viewport={{ once: true }}
+             className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-none" 
+             style={{ color: tokens.colors.textPrimary }}
+           >
+             Enterprise Scale <br className="sm:hidden" />
+             <span className="text-transparent bg-clip-text bg-gradient-to-b from-accent-primary to-accent-primary/50">
+               Performance
+             </span>
+           </motion.h2>
+           <p className="max-w-xl mx-auto opacity-60 text-sm md:text-base font-medium" style={{ color: tokens.colors.textSecondary }}>
+             Global infrastructure metrics powered by Atomity's real-time cost-optimization engine.
+           </p>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {metrics.map((metric, i) => (
             <motion.div
